@@ -1,0 +1,28 @@
+# Product Manager
+
+Este proyecto es un sistema simple de gestión de productos desarrollado en JavaScript.
+
+## Descripción
+
+El Product Manager permite agregar, listar y buscar productos. Cada producto tiene un título, descripción, precio, imagen y código. Además, se registra el stock disponible.
+
+## Funcionalidades
+
+- Agregar un nuevo producto con su información relevante.
+- Listar todos los productos existentes en el sistema.
+- Buscar un producto por su id.
+- Validar si un producto con un código determinado ya existe en el sistema.
+
+## Tecnologías utilizadas
+
+- JavaScript
+- Node.js
+
+## Instalación
+
+1. Clona este repositorio en tu máquina local.
+2. Instala las dependencias utilizando el siguiente comando: `npm install`.
+
+## Uso
+
+1. Ejecuta el programa con el siguiente comando: `node productManager.js`.

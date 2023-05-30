@@ -46,14 +46,3 @@ class ProductManager {
     return console.log(productExists);
   }
 }
-
-const manager = new ProductManager();
-
-manager.getProducts();
-
-manager.addProduct("Algo", "Descripcion de algo", 1, "https://picsum.photos/200", "abc123", 5);
-manager.addProduct("Algo2", "Descripcion de algo2", 2, "https://picsum.photos/200", "abc124", 10);
-
-manager.getProducts();
-
-manager.getProductById(1)
