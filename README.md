@@ -1,5 +1,7 @@
 # Product Manager
 
+![heroImg](https://github.com/JEmperador/backend_coderHouse/assets/88438404/76e3c8df-9130-4cc6-91d8-727ee6943b5d)
+
 Este proyecto es un sistema simple de gestión de productos desarrollado en JavaScript.
 
 ## Descripción
