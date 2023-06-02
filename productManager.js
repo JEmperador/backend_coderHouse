@@ -46,3 +46,15 @@ class ProductManager {
     return console.log(productExists);
   }
 }
+
+const manager = new ProductManager();
+
+manager.getProducts();
+
+manager.addProduct("producto prueba", "Este es un producto prueba", 200, "Sin imagen", "abc123", 25);
+
+manager.getProducts();
+
+manager.addProduct("producto prueba", "Este es un producto prueba", 200, "Sin imagen", "abc123", 25);
+
+manager.getProductById(2)
