@@ -6,13 +6,15 @@ Este proyecto es un sistema simple de gestión de productos desarrollado en Java
 
 ## Descripción
 
-El Product Manager permite agregar, listar y buscar productos. Cada producto tiene un título, descripción, precio, imagen y código. Además, se registra el stock disponible.
+El Product Manager permite agregar, listar, buscar, actualizar y eliminar productos. Cada producto tiene un título, descripción, precio, imagen y código. Además, se registra el stock disponible.
 
 ## Funcionalidades
 
 - Agregar un nuevo producto con su información relevante.
 - Listar todos los productos existentes en el sistema.
 - Buscar un producto por su id.
+- Editar las propiedades del producto con su id.
+- Eliminar un producto con su id.
 - Validar si un producto con un código determinado ya existe en el sistema.
 
 ## Tecnologías utilizadas
@@ -26,5 +28,5 @@ El Product Manager permite agregar, listar y buscar productos. Cada producto tie
 2. Instala las dependencias utilizando el siguiente comando: `npm install`.
 
 ## Uso
-
-1. Ejecuta el programa con el siguiente comando: `node productManager.js`.
+1. ingresar a la carpeta src con este comando: `cd src/`
+2. Ejecuta el programa con el siguiente comando: `node productManager.js`.
