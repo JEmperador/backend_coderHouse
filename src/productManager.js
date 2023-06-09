@@ -8,8 +8,11 @@ class ProductManager {
   }
 
   _getNextId = () => {
-    const count = this.products.length;
-    const nextId = count > 0 ? this.products[count - 1].id + 1 : 1;
+    const data = fs.readFileSync(ProductManager.#path);
+    const products = JSON.parse(data);
+
+    const count = products.length;
+    const nextId = count > 0 ? products[count - 1].id + 1 : 1;
 
     return nextId;
   };
@@ -29,10 +32,15 @@ class ProductManager {
       };
 
       if (products.find((product) => product.code === code)) {
-        return console.log(`The product with code: ${product.code} already exists\n`);
+        return console.log(
+          `The product with code: ${product.code} already exists\n`
+        );
       } else {
         products.push(product);
-        await fs.promises.writeFile(ProductManager.#path, JSON.stringify(products, null, "\t"));
+        await fs.promises.writeFile(
+          ProductManager.#path,
+          JSON.stringify(products, null, "\t")
+        );
 
         return console.log(products);
       }
@@ -43,22 +51,21 @@ class ProductManager {
 
   getProducts = async () => {
     try {
-      if (fs.existsSync(ProductManager.#path)) {
-        const data = await fs.promises.readFile(ProductManager.#path, "utf-8");
-        const products = JSON.parse(data);
-        return products;
-      } else {
-        return [];
-      }
+      const data = await fs.promises.readFile(ProductManager.#path, "utf-8");
+      const products = JSON.parse(data);
+      return products;
     } catch (err) {
-      return console.log(err);
+      console.log("File not found");
+      return [];
     }
   };
 
   getProductById = async (id) => {
     const products = await this.getProducts();
     try {
-      const itemId = Object.values(products).find((product) => product.id === id);
+      const itemId = Object.values(products).find(
+        (product) => product.id === id
+      );
 
       if (itemId === undefined) {
         return console.error("Product does not exist");
@@ -76,10 +83,21 @@ class ProductManager {
       const index = await products.findIndex((product) => product.id === id);
 
       if (index === -1) {
-        return console.log("Product does not existe");
+        return console.log("Product does not exist");
       } else {
+        if (
+          propsProduct.hasOwnProperty("id") ||
+          propsProduct.hasOwnProperty("code")
+        ) {
+          return console.log("Cannot update 'id' or 'code' property");
+        }
+
         Object.assign(products[index], propsProduct);
-        await fs.promises.writeFile(ProductManager.#path, JSON.stringify(products), "utf-8");
+        await fs.promises.writeFile(
+          ProductManager.#path,
+          JSON.stringify(products),
+          "utf-8"
+        );
         const updatedProduct = products[index];
 
         return console.log(updatedProduct);
@@ -96,7 +114,11 @@ class ProductManager {
 
       if (product) {
         products = products.filter((item) => item.id !== id);
-        await fs.promises.writeFile(ProductManager.#path, JSON.stringify(products), "utf-8");
+        await fs.promises.writeFile(
+          ProductManager.#path,
+          JSON.stringify(products),
+          "utf-8"
+        );
 
         return console.log("Product removed");
       } else {
@@ -115,11 +137,11 @@ const manager = new ProductManager();
   const queryProducts = await manager.getProducts();
   console.log(queryProducts);
 };
-consulta() */
+consulta(); */
 
 /* const carga = async () => {
   console.log("----------Carga de producto----------");
-  const product1 = await manager.addProduct("Producto prueba", "Este es un producto prueba", 200, "Sin imagen", "abc123", 25);
+  const product1 = await manager.addProduct("Producto prueba2", "Este es un producto prueba2", 2002, "Sin imagen2", "abc1232", 252);
 };
 carga(); */
 
@@ -140,3 +162,76 @@ actualizar(); */
   const idDelete = await manager.deleteProduct(1);
 };
 borrar(); */
+
+/* const main = async () => {
+  console.log("consulta");
+
+  console.log(await manager.getProducts());
+
+  console.log("carga");
+
+  await manager.addProduct(
+    "Producto prueba",
+    "Este es un producto prueba",
+    200,
+    "Sin imagen",
+    "abc123",
+    25
+  );
+
+  await manager.addProduct(
+    "Producto prueba2",
+    "Este es un producto prueba",
+    200,
+    "Sin imagen",
+    "abc124",
+    25
+  );
+
+  await manager.addProduct(
+    "Producto prueba3",
+    "Este es un producto prueba",
+    200,
+    "Sin imagen",
+    "abc125",
+    25
+  );
+
+  console.log("consulta por ID");
+
+  await manager.getProductById(2);
+
+  console.log("update");
+
+  const dato = {
+    id: 5, //Este campo deberia generar un error porque no debe cargarse
+    title: 'Producto prueba0',
+    price: 2000,
+    code: 'asd123', //Este campo deberia generar un error porque no debe cargarse
+    thumbnail: 'Sin imagen0',
+    stock: 25
+  }
+
+  await manager.updateProduct(3, dato);
+
+  console.log("delete");
+
+  await manager.deleteProduct(3);
+
+  console.log("carga");
+
+  await manager.addProduct(
+    "Producto prueba4",
+    "Este es un producto prueba",
+    200,
+    "Sin imagen",
+    "abc123",
+    25
+  );
+
+  console.log("consulta");
+
+  console.log(await manager.getProducts());
+};
+
+main(); */
