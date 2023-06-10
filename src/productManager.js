@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 class ProductManager {
-  static #path = "../mock/products.json";
+  static #path = "./mock/products.json";
   constructor() {
     this.products = [];
     ProductManager.#path;
@@ -68,9 +68,11 @@ class ProductManager {
       );
 
       if (itemId === undefined) {
-        return console.error("Product does not exist");
+        console.log('Product does not exist');
+        return 'Product does not exist';
       } else {
-        return console.log(itemId);
+        console.log(itemId);
+        return itemId;
       }
     } catch (err) {
       return console.error(err);
@@ -130,7 +132,9 @@ class ProductManager {
   };
 }
 
-const manager = new ProductManager();
+module.exports = ProductManager;
+
+//const manager = new ProductManager();
 
 /* const consulta = async () => {
   console.log("----------Consulta de productos----------");

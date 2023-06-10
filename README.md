@@ -21,6 +21,8 @@ El Product Manager permite agregar, listar, buscar, actualizar y eliminar produc
 
 - JavaScript
 - Node.js
+- Nodemon
+- Express.js
 
 ## Instalación
 
@@ -28,5 +30,5 @@ El Product Manager permite agregar, listar, buscar, actualizar y eliminar produc
 2. Instala las dependencias utilizando el siguiente comando: `npm install`.
 
 ## Uso
-1. ingresar a la carpeta src con este comando: `cd src/`
-2. Ejecuta el programa con el siguiente comando: `node productManager.js`.
+1. Ejecuta el programa con el siguiente comando: `npm run start`.
+2. O: `npm run dev` si desea correrlo con nodemon.
