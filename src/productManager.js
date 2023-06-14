@@ -1,6 +1,7 @@
 const fs = require("fs");
 
 class ProductManager {
+  //En caso de utilizar solo la clase directamente la tura debe ser "../mock/products.json"
   static #path = "./mock/products.json";
   constructor() {
     this.products = [];
@@ -8,11 +9,8 @@ class ProductManager {
   }
 
   _getNextId = () => {
-    const data = fs.readFileSync(ProductManager.#path);
-    const products = JSON.parse(data);
-
-    const count = products.length;
-    const nextId = count > 0 ? products[count - 1].id + 1 : 1;
+    const count = this.products.length;
+    const nextId = count > 0 ? this.products[count - 1].id + 1 : 1;
 
     return nextId;
   };
@@ -53,6 +51,7 @@ class ProductManager {
     try {
       const data = await fs.promises.readFile(ProductManager.#path, "utf-8");
       const products = JSON.parse(data);
+      this.products = products
       return products;
     } catch (err) {
       console.log("File not found");
@@ -133,109 +132,3 @@ class ProductManager {
 }
 
 module.exports = ProductManager;
-
-//const manager = new ProductManager();
-
-/* const consulta = async () => {
-  console.log("----------Consulta de productos----------");
-  const queryProducts = await manager.getProducts();
-  console.log(queryProducts);
-};
-consulta(); */
-
-/* const carga = async () => {
-  console.log("----------Carga de producto----------");
-  const product1 = await manager.addProduct("Producto prueba2", "Este es un producto prueba2", 2002, "Sin imagen2", "abc1232", 252);
-};
-carga(); */
-
-/* const consultaPorId = async () => {
-  console.log("----------Consulta de producto por id----------");
-  const idProduct = await manager.getProductById(1);
-};
-consultaPorId(); */
-
-/* const actualizar = async () => {
-  console.log("----------Actualizacion de producto----------");
-  const productUpdate1 = await manager.updateProduct(1, { title: "producto prueba modificado", description: "Lorem Ipsum modificado", stock: 50 });
-};
-actualizar(); */
-
-/* const borrar = async () => {
-  console.log("----------Borra producto por id----------");
-  const idDelete = await manager.deleteProduct(1);
-};
-borrar(); */
-
-/* const main = async () => {
-  console.log("consulta");
-
-  console.log(await manager.getProducts());
-
-  console.log("carga");
-
-  await manager.addProduct(
-    "Producto prueba",
-    "Este es un producto prueba",
-    200,
-    "Sin imagen",
-    "abc123",
-    25
-  );
-
-  await manager.addProduct(
-    "Producto prueba2",
-    "Este es un producto prueba",
-    200,
-    "Sin imagen",
-    "abc124",
-    25
-  );
-
-  await manager.addProduct(
-    "Producto prueba3",
-    "Este es un producto prueba",
-    200,
-    "Sin imagen",
-    "abc125",
-    25
-  );
-
-  console.log("consulta por ID");
-
-  await manager.getProductById(2);
-
-  console.log("update");
-
-  const dato = {
-    id: 5, //Este campo deberia generar un error porque no debe cargarse
-    title: 'Producto prueba0',
-    price: 2000,
-    code: 'asd123', //Este campo deberia generar un error porque no debe cargarse
-    thumbnail: 'Sin imagen0',
-    stock: 25
-  }
-
-  await manager.updateProduct(3, dato);
-
-  console.log("delete");
-
-  await manager.deleteProduct(3);
-
-  console.log("carga");
-
-  await manager.addProduct(
-    "Producto prueba4",
-    "Este es un producto prueba",
-    200,
-    "Sin imagen",
-    "abc123",
-    25
-  );
-
-  console.log("consulta");
-
-  console.log(await manager.getProducts());
-};
-
-main(); */
