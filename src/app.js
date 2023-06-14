@@ -12,7 +12,7 @@ app.listen(port, (req, res) => {
 app.get("/", (req, res) => {
   res.json({
     message:
-      "Bievenido, para acceder a los productos ve a la ruta localhost:8080/products",
+      "Welcome, to access the products go to the route localhost:8080/products",
   });
 });
 
