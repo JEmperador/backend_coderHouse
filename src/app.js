@@ -1,15 +1,17 @@
 const express = require("express");
-const ProductManager = require("./productManager");
+//const ProductManager = require("./managers/product/productManager");
 const app = express();
-const productManager = new ProductManager();
+//const productManager = new ProductManager();
+const router = require("./router")
 
 const port = 8080;
 
-app.listen(port, (req, res) => {
-  console.log(`Server running at port: ${port}`);
-});
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
-app.get("/", (req, res) => {
+router(app)
+
+/* app.get("/", (req, res) => {
   res.json({
     message:
       "Welcome, to access the products go to the route localhost:8080/products",
@@ -21,13 +23,13 @@ app.get("/products", async (req, res) => {
   try {
     const products = await productManager.getProducts();
     if (!limit || limit < 1) {
-      res.json(products);
+      res.status(200).json(products);
     } else {
       const limitedProducts = products.slice(0, limit);
-      res.json(limitedProducts);
+      res.status(206).json(limitedProducts);
     }
   } catch (err) {
-    res.json(err);
+    res.status(400).json({ error400: "Bad Request" });;
   }
 });
 
@@ -36,8 +38,12 @@ app.get("/products/:pid", async (req, res) => {
 
   try {
     const product = await productManager.getProductById(Number(pid));
-    res.json(product);
+    res.status(200).json(product);
   } catch (err) {
-    res.json(err);
+    res.status(404).json({ error404: "Not Found" });;
   }
+}); */
+
+app.listen(port, (req, res) => {
+  console.log(`Server running at port: ${port}`);
 });

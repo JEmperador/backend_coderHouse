@@ -15,7 +15,7 @@ class ProductManager {
     return nextId;
   };
 
-  addProduct = async (title, description, price, thumbnail, code, stock) => {
+  addProduct = async (title, description, price, thumbnail, code, stock, category) => {
     const products = await this.getProducts();
 
     try {
@@ -27,6 +27,8 @@ class ProductManager {
         thumbnail,
         code,
         stock,
+        category,
+        status: true
       };
 
       if (products.find((product) => product.code === code)) {
@@ -81,16 +83,18 @@ class ProductManager {
   updateProduct = async (id, propsProduct) => {
     const products = await this.getProducts();
     try {
-      const index = await products.findIndex((product) => product.id === id);
+      const index = products.findIndex((product) => product.id === id);
 
       if (index === -1) {
-        return console.log("Product does not exist");
+        console.log("Product does not exist")
+        return "Product does not exist";
       } else {
         if (
           propsProduct.hasOwnProperty("id") ||
           propsProduct.hasOwnProperty("code")
         ) {
-          return console.log("Cannot update 'id' or 'code' property");
+          console.log("Cannot update 'id' or 'code' property")
+          return "Cannot update 'id' or 'code' property";
         }
 
         Object.assign(products[index], propsProduct);
@@ -101,7 +105,8 @@ class ProductManager {
         );
         const updatedProduct = products[index];
 
-        return console.log(updatedProduct);
+        console.log(updatedProduct)
+        return updatedProduct;
       }
     } catch (err) {
       return console.error(err);
