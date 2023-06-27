@@ -15,8 +15,8 @@ router.post("/", async (req, res) => {
     const products = await productManager.getProducts();
     if (products.find((product) => product.code === code)) {
       res
-        .status(400)
-        .json({ error400: `The product with code: ${code} already exists` });
+        .status(409)
+        .json({ error409: `The product with code: ${code} already exists` });
     } else {
       await productManager.addProduct(
         title,
@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
         stock,
         category
       );
-      res.status(201).json({ message: "Product created successfully" });
+      res.status(201).json("Product created successfully");
     }
   } catch (err) {
     res.status(500).json({ error500: "Error creating product" });
@@ -68,11 +68,11 @@ router.put("/:pid", async (req, res) => {
       Number(pid),
       props
     );
-    /* if (!updatedProduct) {
+    if (!updatedProduct) {
       res.status(404).json({ error404: `Product with id: ${pid} not found.` });
-    } else { */
+    } else {
       res.status(200).json(updatedProduct);
-    /* } */
+    }
   } catch (err) {
     res.status(400).json({ error400: "Bad Request" });
   }
@@ -82,7 +82,7 @@ router.delete("/:pid", async (req, res) => {
   const { pid } = req.params;
   try {
     await productManager.deleteProduct(Number(pid));
-    res.status(200).json({ message: `Product with id: ${pid} was removed` });
+    res.status(200).json(`Product with id: ${pid} was removed`);
   } catch (err) {
     res.status(400).json({ error400: "Bad Request" });
   }

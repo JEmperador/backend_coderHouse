@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 class ProductManager {
-  //En caso de utilizar solo la clase directamente la tura debe ser "../mock/products.json"
+  //En caso de utilizar solo la clase directamente la ruta debe ser "../mock/products.json"
   static #path = "./mock/products.json";
   constructor() {
     this.products = [];
@@ -15,7 +15,15 @@ class ProductManager {
     return nextId;
   };
 
-  addProduct = async (title, description, price, thumbnail, code, stock, category) => {
+  addProduct = async (
+    title,
+    description,
+    price,
+    thumbnail,
+    code,
+    stock,
+    category
+  ) => {
     const products = await this.getProducts();
 
     try {
@@ -28,7 +36,7 @@ class ProductManager {
         code,
         stock,
         category,
-        status: true
+        status: true,
       };
 
       if (products.find((product) => product.code === code)) {
@@ -53,7 +61,7 @@ class ProductManager {
     try {
       const data = await fs.promises.readFile(ProductManager.#path, "utf-8");
       const products = JSON.parse(data);
-      this.products = products
+      this.products = products;
       return products;
     } catch (err) {
       console.log("File not found");
@@ -69,8 +77,8 @@ class ProductManager {
       );
 
       if (itemId === undefined) {
-        console.log('Product does not exist');
-        return 'Product does not exist';
+        console.log("Product does not exist");
+        return "Product does not exist";
       } else {
         console.log(itemId);
         return itemId;
@@ -83,31 +91,28 @@ class ProductManager {
   updateProduct = async (id, propsProduct) => {
     const products = await this.getProducts();
     try {
-      const index = products.findIndex((product) => product.id === id);
+      const index = await products.findIndex((product) => product.id === id);
 
       if (index === -1) {
-        console.log("Product does not exist")
-        return "Product does not exist";
-      } else {
-        if (
-          propsProduct.hasOwnProperty("id") ||
-          propsProduct.hasOwnProperty("code")
-        ) {
-          console.log("Cannot update 'id' or 'code' property")
-          return "Cannot update 'id' or 'code' property";
-        }
-
-        Object.assign(products[index], propsProduct);
-        await fs.promises.writeFile(
-          ProductManager.#path,
-          JSON.stringify(products),
-          "utf-8"
-        );
-        const updatedProduct = products[index];
-
-        console.log(updatedProduct)
-        return updatedProduct;
+        return console.log(`Product with id: ${id} does not exist`);
       }
+      if (
+        propsProduct.hasOwnProperty("id") ||
+        propsProduct.hasOwnProperty("code")
+      ) {
+        return console.log("Cannot update 'id' or 'code' property");
+      }
+
+      Object.assign(products[index], propsProduct);
+      await fs.promises.writeFile(
+        ProductManager.#path,
+        JSON.stringify(products),
+        "utf-8"
+      );
+      const updatedProduct = products[index];
+
+      console.log(updatedProduct);
+      return updatedProduct;
     } catch (err) {
       return console.error(err);
     }
@@ -116,7 +121,7 @@ class ProductManager {
   deleteProduct = async (id) => {
     let products = await this.getProducts();
     try {
-      const product = Object.values(products).find((e) => e.id === id);
+      const product = Object.values(products).find((product) => product.id === id);
 
       if (product) {
         products = products.filter((item) => item.id !== id);
