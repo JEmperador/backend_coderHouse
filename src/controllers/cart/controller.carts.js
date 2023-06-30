@@ -56,8 +56,12 @@ router.get("/:cid", async (req, res) => {
 router.delete("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
-    await cartManager.deleteCart(Number(cid));
-    res.status(200).json(`Cart with id: ${cid} was removed`);
+    let status = await cartManager.deleteCart(Number(cid));
+    if (!status) {
+      res.status(400).json(`Cart does not exist`);
+    } else {
+      res.status(200).json(`Cart with id: ${cid} was removed`);
+    }
   } catch (err) {
     res.status(400).json({ error400: "Bad Request" });
   }

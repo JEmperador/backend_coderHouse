@@ -109,9 +109,11 @@ class CartManager {
         carts = carts.filter((item) => item.id !== idCart);
         await fs.promises.writeFile(path, JSON.stringify(carts), "utf-8");
 
-        return console.log("Cart removed");
+        console.log("Cart removed")
+        return "Cart removed";
       } else {
-        return console.error("Cart does not exist");
+        console.error("Cart does not exist")
+        return undefined;
       }
     } catch (err) {
       return console.error(err);

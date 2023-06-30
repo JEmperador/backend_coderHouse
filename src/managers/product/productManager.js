@@ -100,7 +100,8 @@ class ProductManager {
         propsProduct.hasOwnProperty("id") ||
         propsProduct.hasOwnProperty("code")
       ) {
-        return console.log("Cannot update 'id' or 'code' property");
+        console.log("Cannot update 'id' or 'code' property")
+        return "Cannot update 'id' or 'code' property";
       }
 
       Object.assign(products[index], propsProduct);
@@ -131,9 +132,11 @@ class ProductManager {
           "utf-8"
         );
 
-        return console.log("Product removed");
+        console.log("Product removed")
+        return "Product removed";
       } else {
-        return console.error("Product does not exist");
+        console.error("Product does not exist")
+        return undefined;
       }
     } catch (err) {
       return console.error(err);

@@ -39,9 +39,21 @@ router.get("/", async (req, res) => {
   try {
     const products = await productManager.getProducts();
     if (!limit || limit < 1) {
+      //Para handlebars
+      /* res.render("index", {
+        title: "Productos",
+        name: "Parzival",
+        products: products
+      }) */
       res.status(200).json(products);
     } else {
       const limitedProducts = products.slice(0, limit);
+      //Para handlebars
+      /* res.render("index", {
+        title: "Productos",
+        name: "Parzival",
+        products: limitedProducts
+      }) */
       res.status(206).json(limitedProducts);
     }
   } catch (err) {
@@ -81,8 +93,12 @@ router.put("/:pid", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
   const { pid } = req.params;
   try {
-    await productManager.deleteProduct(Number(pid));
-    res.status(200).json(`Product with id: ${pid} was removed`);
+    let status = await productManager.deleteProduct(Number(pid));
+    if (!status) {
+      res.status(400).json(`Product does not exist`);
+    } else {
+      res.status(200).json(`Product with id: ${pid} was removed`);
+    }
   } catch (err) {
     res.status(400).json({ error400: "Bad Request" });
   }
