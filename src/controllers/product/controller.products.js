@@ -5,32 +5,30 @@ const router = Router();
 
 router.post("/", async (req, res) => {
   const { title, description, price, code, stock, category } = req.body;
-  const thumbnail = req.body.thumbnail || [];
+  const thumbnail = Array.isArray(req.body.thumbnail)
+    ? req.body.thumbnail
+    : [req.body.thumbnail];
 
   if (!title || !description || !code || !price || !stock || !category) {
     return res.status(400).json({ error400: "All fields are required" });
   }
 
   try {
-    const products = await productManager.getProducts();
-    if (products.find((product) => product.code === code)) {
-      res
-        .status(409)
-        .json({ error409: `The product with code: ${code} already exists` });
-    } else {
-      await productManager.addProduct(
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
-        category
-      );
-      res.status(201).json("Product created successfully");
-    }
+    await productManager.addProduct(
+      title,
+      description,
+      price,
+      thumbnail,
+      code,
+      stock,
+      category
+    );
+    res.status(201).json("Product created successfully");
+    /* } */
   } catch (err) {
-    res.status(500).json({ error500: "Error creating product" });
+    if (err.message.includes("The product with")) {
+      res.status(409).json({ error409: err.message });
+    }
   }
 });
 
@@ -68,7 +66,9 @@ router.get("/:pid", async (req, res) => {
     const product = await productManager.getProductById(Number(pid));
     res.status(200).json(product);
   } catch (err) {
-    res.status(404).json({ error404: "Not Found" });
+    if (err.message.includes("Product with id")) {
+      res.status(404).json({ error404: err.message });
+    }
   }
 });
 
@@ -80,13 +80,15 @@ router.put("/:pid", async (req, res) => {
       Number(pid),
       props
     );
-    if (!updatedProduct) {
-      res.status(404).json({ error404: `Product with id: ${pid} not found.` });
-    } else {
-      res.status(200).json(updatedProduct);
-    }
+    res.status(200).json(updatedProduct);
   } catch (err) {
-    res.status(400).json({ error400: "Bad Request" });
+    if (err.message.includes("Product with id")) {
+      res.status(404).json({ error404: err.message });
+    } else if (err.message.includes("Cannot update")) {
+      res.status(400).json({ error400: err.message });
+    } else {
+      res.status(500).json({ error500: "Internal Server Error" });
+    }
   }
 });
 
@@ -94,13 +96,12 @@ router.delete("/:pid", async (req, res) => {
   const { pid } = req.params;
   try {
     let status = await productManager.deleteProduct(Number(pid));
-    if (!status) {
-      res.status(400).json(`Product does not exist`);
-    } else {
-      res.status(200).json(`Product with id: ${pid} was removed`);
-    }
+
+    res.status(200).json(`Product with id: ${pid} was removed`);
   } catch (err) {
-    res.status(400).json({ error400: "Bad Request" });
+    if (err.message.includes("Product does")) {
+      res.status(404).json({ error400: err.message });
+    }
   }
 });
 

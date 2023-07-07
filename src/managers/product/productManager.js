@@ -40,20 +40,20 @@ class ProductManager {
       };
 
       if (products.find((product) => product.code === code)) {
-        return console.log(
-          `The product with code: ${product.code} already exists\n`
+        console.log(`The product with code: ${product.code} already exists`);
+        throw new Error(
+          `The product with code: ${product.code} already exists`
         );
-      } else {
-        products.push(product);
-        await fs.promises.writeFile(
-          ProductManager.#path,
-          JSON.stringify(products, null, "\t")
-        );
-
-        return console.log(products);
       }
+      products.push(product);
+      await fs.promises.writeFile(
+        ProductManager.#path,
+        JSON.stringify(products, null, "\t")
+      );
+
+      return console.log(products);
     } catch (err) {
-      return console.log(err);
+      throw err;
     }
   };
 
@@ -77,14 +77,13 @@ class ProductManager {
       );
 
       if (itemId === undefined) {
-        console.log("Product does not exist");
-        return "Product does not exist";
-      } else {
-        console.log(itemId);
-        return itemId;
+        console.log(`Product with id: ${id} does not exist`);
+        throw new Error(`Product with id: ${id} does not exist`);
       }
+      console.log(itemId);
+      return itemId;
     } catch (err) {
-      return console.error(err);
+      throw err;
     }
   };
 
@@ -94,14 +93,15 @@ class ProductManager {
       const index = await products.findIndex((product) => product.id === id);
 
       if (index === -1) {
-        return console.log(`Product with id: ${id} does not exist`);
+        console.log(`Product with id: ${id} does not exist`);
+        throw new Error(`Product with id: ${id} does not exist`);
       }
       if (
         propsProduct.hasOwnProperty("id") ||
         propsProduct.hasOwnProperty("code")
       ) {
-        console.log("Cannot update 'id' or 'code' property")
-        return "Cannot update 'id' or 'code' property";
+        console.log("Cannot update 'id' or 'code' property");
+        throw new Error("Cannot update 'id' or 'code' property");
       }
 
       Object.assign(products[index], propsProduct);
@@ -115,31 +115,33 @@ class ProductManager {
       console.log(updatedProduct);
       return updatedProduct;
     } catch (err) {
-      return console.error(err);
+      throw err;
     }
   };
 
   deleteProduct = async (id) => {
     let products = await this.getProducts();
     try {
-      const product = Object.values(products).find((product) => product.id === id);
+      const product = Object.values(products).find(
+        (product) => product.id === id
+      );
 
-      if (product) {
-        products = products.filter((item) => item.id !== id);
-        await fs.promises.writeFile(
-          ProductManager.#path,
-          JSON.stringify(products),
-          "utf-8"
-        );
-
-        console.log("Product removed")
-        return "Product removed";
-      } else {
-        console.error("Product does not exist")
-        return undefined;
+      if (!product) {
+        console.log("Product does not exist");
+        throw new Error("Product does not exist");
       }
+
+      products = products.filter((item) => item.id !== id);
+      await fs.promises.writeFile(
+        ProductManager.#path,
+        JSON.stringify(products),
+        "utf-8"
+      );
+
+      console.log("Product removed");
+      return "Product removed";
     } catch (err) {
-      return console.error(err);
+      throw err;
     }
   };
 }

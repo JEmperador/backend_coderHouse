@@ -21,15 +21,13 @@ router.post("/:cid/product/:pid", async (req, res) => {
       Number(pid),
       quantity
     );
-    if (update) {
-      res
-        .status(200)
-        .json(`The product ${pid} in cart ${cid} was successfully updated`);
-    } else {
-      res.status(404).json({ error404: "Not Found" });
-    }
+    res
+      .status(200)
+      .json(`The product ${pid} in cart ${cid} was successfully updated`);
   } catch (err) {
-    res.status(400).json({ error400: "Bad Request" });
+    if (err.message.includes("Cart with id")) {
+      res.status(404).json({ error404: err.message });
+    }
   }
 });
 
@@ -49,7 +47,9 @@ router.get("/:cid", async (req, res) => {
     const cart = await cartManager.getCartById(Number(cid));
     res.status(200).json(cart);
   } catch (err) {
-    res.status(404).json({ error404: "Not Found" });
+    if (err.message.includes("Cart with id")) {
+      res.status(404).json({ error404: err.message });
+    }
   }
 });
 
@@ -57,13 +57,11 @@ router.delete("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
     let status = await cartManager.deleteCart(Number(cid));
-    if (!status) {
-      res.status(400).json(`Cart does not exist`);
-    } else {
-      res.status(200).json(`Cart with id: ${cid} was removed`);
-    }
+    res.status(200).json(`Cart with id: ${cid} was removed`);
   } catch (err) {
-    res.status(400).json({ error400: "Bad Request" });
+    if (err.message.includes("Cart does")) {
+      res.status(404).json({ error400: err.message });
+    }
   }
 });
 
