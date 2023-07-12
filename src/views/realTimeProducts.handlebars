@@ -1,0 +1,60 @@
+<h2>Lista de productos - Tiempo Real</h2>
+
+<ul>
+    <li>
+        <a href="./">Principal</a>
+    </li>
+</ul>
+
+<hr>
+
+<form id="realTimeForm">
+    <label>Title:</label>
+    <input type="text" name="title" id="" required>
+    <br>
+    <label>Description:</label>
+    <input type="text" name="description" id="" required>
+    <br>
+    <label>Price:</label>
+    <input type="number" name="price" id="" required>
+    <br>
+    <label>Thumbnail:</label>
+    <input type="text" name="thumbnail" id="">
+    <br>
+    <label>Code:</label>
+    <input type="text" name="code" id="" required>
+    <br>
+    <label>Stock:</label>
+    <input type="number" name="stock" id="" required>
+    <br>
+    <label>Category:</label>
+    <input type="text" name="category" id="" required>
+    <br>
+    <button type="submit">Cargar</button>
+</form>
+
+<hr>
+
+<div>
+    <div style="display: flex; flex-wrap: wrap">
+        {{#each products}}
+        <div
+            style="border-radius: 5px; background-color: white; width: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 5px">
+            <div>
+                {{title}} - {{category}}
+            </div>
+            <div>
+                <img src={{thumbnail}} alt="img - {{thumbnail}}">
+            </div>
+            <p>{{description}}</p>
+            <div>
+                <p>Precio: {{price}} - Stock: {{stock}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="/static/js/index.js"></script>

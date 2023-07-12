@@ -24,7 +24,6 @@ router.post("/", async (req, res) => {
       category
     );
     res.status(201).json("Product created successfully");
-    /* } */
   } catch (err) {
     if (err.message.includes("The product with")) {
       res.status(409).json({ error409: err.message });
@@ -37,21 +36,9 @@ router.get("/", async (req, res) => {
   try {
     const products = await productManager.getProducts();
     if (!limit || limit < 1) {
-      //Para handlebars
-      /* res.render("index", {
-        title: "Productos",
-        name: "Parzival",
-        products: products
-      }) */
       res.status(200).json(products);
     } else {
       const limitedProducts = products.slice(0, limit);
-      //Para handlebars
-      /* res.render("index", {
-        title: "Productos",
-        name: "Parzival",
-        products: limitedProducts
-      }) */
       res.status(206).json(limitedProducts);
     }
   } catch (err) {

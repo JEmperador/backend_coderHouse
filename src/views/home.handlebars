@@ -1,0 +1,33 @@
+<h2>Lista de productos</h2>
+
+<ul>
+    <li>
+        <a href="./realTimeProducts">Tiempo Real</a>
+    </li>
+    <li>
+        <a href="./form">Cargar</a>
+    </li>
+    <li>
+        <a href="">Eliminar</a>
+    </li>
+</ul>
+
+<div>
+    <div style="display: flex; flex-wrap: wrap">
+        {{#each products}}
+        <div
+            style="border-radius: 5px; background-color: white; width: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 5px">
+            <div>
+                {{title}} - {{category}}
+            </div>
+            <div>
+                <img src={{thumbnail}} alt="img - {{thumbnail}}">
+            </div>
+            <p>{{description}}</p>
+            <div>
+                <p>Precio: {{price}} - Stock: {{stock}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
