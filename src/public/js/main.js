@@ -1,6 +1,6 @@
 const socket = io();
 
-document.getElementById("realTimeForm").onsubmit = (e) => {
+document.getElementById("realTimeFormCreate").onsubmit = (e) => {
   e.preventDefault();
 
   const title = document.querySelector("input[name=title]").value
@@ -13,6 +13,6 @@ document.getElementById("realTimeForm").onsubmit = (e) => {
 
   const product = {title, description, price, thumbnail, code, stock, category}
 
-  socket.emit("new-product", product)
+  socket.emit("client:newProduct", product)
 };
 

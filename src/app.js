@@ -21,11 +21,16 @@ const httpServer = app.listen(PORT, (req, res) => {
   console.log(`Server running at port: ${PORT}`);
 });
 
-const io = new Server(httpServer);
+global.io = new Server(httpServer);
 
 io.on("connection", (socket) => {
-  console.log("New user joined");
-  socket.on("new-product", (data) => {
+  console.log(`New user joined: ${socket.id}`);
+
+  socket.on("client:newProduct", (data) => {
     console.log(data);
   });
+
+  socket.on("disconnect", () => {
+    console.log(`User ${socket.id}`);
+  })
 });

@@ -74,7 +74,17 @@ router.get("/realTimeProducts", async (req, res) => {
   }
 });
 
-/* router.post("/realTimeProducts", async (req, res) => {
+router.post("/realTimeProducts", async (req, res) => {
+
+  global.io.on("connection", (socket) => {
+    console.log(`New user joined: ${socket.id}`);
+    socket.on("client:newProduct", (data) => {
+      console.log(data);
+    });
+  });
+
+  req.body = data
+
   const { title, description, price, code, stock, category } = req.body;
   const thumbnail = Array.isArray(req.body.thumbnail)
     ? req.body.thumbnail
@@ -83,6 +93,8 @@ router.get("/realTimeProducts", async (req, res) => {
   if (!title || !description || !price || !code || !stock || !category) {
     return res.status(400).json({ error400: "All fields are required" });
   }
+
+  
 
   try {
     await productManager.addProduct(
@@ -94,12 +106,12 @@ router.get("/realTimeProducts", async (req, res) => {
       Number(stock),
       category
     );
-    res.redirect("/");
+    res.render("realTimeProducts");
   } catch (err) {
     if (err.message.includes("The product with")) {
       res.status(409).json({ error409: err.message });
     }
   }
-}); */
+});
 
 module.exports = router;

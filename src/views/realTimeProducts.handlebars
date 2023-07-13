@@ -1,4 +1,4 @@
-<h2>Lista de productos - Tiempo Real</h2>
+<h1>Lista de productos - Tiempo Real</h1>
 
 <ul>
     <li>
@@ -8,7 +8,9 @@
 
 <hr>
 
-<form id="realTimeForm">
+<h2>Cargar</h2>
+
+<form id="realTimeFormCreate">
     <label>Title:</label>
     <input type="text" name="title" id="" required>
     <br>
@@ -35,6 +37,15 @@
 
 <hr>
 
+<h2>Eliminar</h2>
+
+<form id="realTimeFormDelete">
+    <label>ID:</label>
+    <input type="number" name="id" id="">
+</form>
+
+<hr>
+
 <div>
     <div style="display: flex; flex-wrap: wrap">
         {{#each products}}
@@ -57,4 +68,4 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
-<script src="/static/js/index.js"></script>
+<script src="/static/js/main.js"></script>

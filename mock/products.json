@@ -154,5 +154,31 @@
 		"stock": 500,
 		"category": "ogla",
 		"status": true
+	},
+	{
+		"id": 13,
+		"title": "asd",
+		"description": "asd",
+		"price": 100,
+		"thumbnail": [
+			"asd"
+		],
+		"code": "asd",
+		"stock": 120,
+		"category": "asd",
+		"status": true
+	},
+	{
+		"id": 14,
+		"title": "dsa",
+		"description": "dsa",
+		"price": 100,
+		"thumbnail": [
+			"dsa"
+		],
+		"code": "dsa",
+		"stock": 100,
+		"category": "dsa",
+		"status": true
 	}
 ]
