@@ -4,6 +4,9 @@ const router = require("./router");
 const handlebars = require("express-handlebars");
 const { Server } = require("socket.io");
 
+const ProductManager = require("./managers/product/productManager");
+const productManager = new ProductManager();
+
 const PORT = process.env.PORT || 8080;
 
 app.use("/static", express.static("./src/public"));
@@ -21,16 +24,50 @@ const httpServer = app.listen(PORT, (req, res) => {
   console.log(`Server running at port: ${PORT}`);
 });
 
-global.io = new Server(httpServer);
+const io = new Server(httpServer);
 
 io.on("connection", (socket) => {
-  console.log(`New user joined: ${socket.id}`);
+  console.log(`New user ${socket.id} joined`);
 
-  socket.on("client:newProduct", (data) => {
-    console.log(data);
+  //Recibe del front
+  socket.on("client:newProduct", async (data) => {
+    const { title, description, price, code, stock, category } = data;
+
+    const thumbnail = Array.isArray(data.thumbnail)
+      ? data.thumbnail
+      : [data.thumbnail];
+
+    if (!title || !description || !price || !code || !stock || !category) {
+      return res.status(400).json({ error400: "All fields are required" });
+    }
+
+    const postProducts = await productManager.addProduct(
+      title,
+      description,
+      price,
+      thumbnail,
+      code,
+      stock,
+      category
+    );
+
+    //Envia el back
+    const listProducts = await productManager.getProducts();
+    io.emit("server:list", listProducts);
+  });
+
+  //Recibe del front
+  socket.on("cliente:deleteProduct", async (data) => {
+    const id = data;
+
+    const deleteProduct = await productManager.deleteProduct(id);
+
+    //Envia el back
+    const listProducts = await productManager.getProducts();
+    io.emit("server:list", listProducts);
   });
 
   socket.on("disconnect", () => {
-    console.log(`User ${socket.id}`);
-  })
+    console.log(`User ${socket.id} disconnected`);
+  });
 });

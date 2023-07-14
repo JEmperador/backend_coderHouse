@@ -131,54 +131,41 @@
 	},
 	{
 		"id": 11,
-		"title": "algo",
-		"description": "algo",
-		"price": 100,
+		"title": "AMD RYZEN 5 7600",
+		"description": "AMD manufacturer",
+		"price": 300,
 		"thumbnail": [
-			"algo"
+			"https://picsum.photos/200"
 		],
-		"code": "algo",
-		"stock": 500,
-		"category": "algo",
+		"code": "ASDF",
+		"stock": 100,
+		"category": "CPU",
 		"status": true
 	},
 	{
 		"id": 12,
-		"title": "ogla",
-		"description": "ogla",
-		"price": 100,
-		"thumbnail": [
-			""
-		],
-		"code": "ogla",
-		"stock": 500,
-		"category": "ogla",
-		"status": true
-	},
-	{
-		"id": 13,
 		"title": "asd",
 		"description": "asd",
-		"price": 100,
+		"price": 200,
 		"thumbnail": [
-			"asd"
+			"asdasd"
 		],
-		"code": "asd",
-		"stock": 120,
+		"code": "asdasd",
+		"stock": 100,
 		"category": "asd",
 		"status": true
 	},
 	{
-		"id": 14,
-		"title": "dsa",
-		"description": "dsa",
+		"id": 13,
+		"title": "fdsa",
+		"description": "fdsa",
 		"price": 100,
 		"thumbnail": [
-			"dsa"
+			"fdsa"
 		],
-		"code": "dsa",
+		"code": "fdsda",
 		"stock": 100,
-		"category": "dsa",
+		"category": "fdsa",
 		"status": true
 	}
 ]

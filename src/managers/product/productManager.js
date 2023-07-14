@@ -144,6 +144,41 @@ class ProductManager {
       throw err;
     }
   };
+
+  /* logicalDeleteProduct = async (id) => {
+    let products = await this.getProducts();
+    try {
+      const product = Object.values(products).find(
+        (product) => product.id === id
+      );
+
+      if (!product) {
+        console.log("Product does not exist");
+        throw new Error("Product does not exist");
+      }
+
+      product.status = false;
+
+      await fs.promises.writeFile(
+        ProductManager.#path,
+        JSON.stringify(product[id]),
+        "utf-8"
+      );
+
+      //products = products.filter((item) => item.id !== id);
+
+      //await fs.promises.writeFile(
+      //  ProductManager.#path,
+      //  JSON.stringify(products),
+      //  "utf-8"
+      //);
+
+      console.log("Product logically removed");
+      return "Product logically removed";
+    } catch (err) {
+      throw err;
+    }
+  }; */
 }
 
 module.exports = ProductManager;

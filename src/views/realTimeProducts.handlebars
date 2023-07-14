@@ -8,62 +8,59 @@
 
 <hr>
 
-<h2>Cargar</h2>
+<div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+    <div style="display: flex;">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h2>Cargar</h2>
 
-<form id="realTimeFormCreate">
-    <label>Title:</label>
-    <input type="text" name="title" id="" required>
-    <br>
-    <label>Description:</label>
-    <input type="text" name="description" id="" required>
-    <br>
-    <label>Price:</label>
-    <input type="number" name="price" id="" required>
-    <br>
-    <label>Thumbnail:</label>
-    <input type="text" name="thumbnail" id="">
-    <br>
-    <label>Code:</label>
-    <input type="text" name="code" id="" required>
-    <br>
-    <label>Stock:</label>
-    <input type="number" name="stock" id="" required>
-    <br>
-    <label>Category:</label>
-    <input type="text" name="category" id="" required>
-    <br>
-    <button type="submit">Cargar</button>
-</form>
-
-<hr>
-
-<h2>Eliminar</h2>
-
-<form id="realTimeFormDelete">
-    <label>ID:</label>
-    <input type="number" name="id" id="">
-</form>
-
-<hr>
-
-<div>
-    <div style="display: flex; flex-wrap: wrap">
-        {{#each products}}
-        <div
-            style="border-radius: 5px; background-color: white; width: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 5px">
-            <div>
-                {{title}} - {{category}}
-            </div>
-            <div>
-                <img src={{thumbnail}} alt="img - {{thumbnail}}">
-            </div>
-            <p>{{description}}</p>
-            <div>
-                <p>Precio: {{price}} - Stock: {{stock}}</p>
-            </div>
+            <form id="realTimeFormCreate">
+                <label>Title:</label>
+                <input type="text" name="title" id="title" required>
+                <br>
+                <label>Description:</label>
+                <input type="text" name="description" id="description" required>
+                <br>
+                <label>Price:</label>
+                <input type="number" name="price" id="price" required>
+                <br>
+                <label>Thumbnail:</label>
+                <input type="text" name="thumbnail" id="thumbnail">
+                <br>
+                <label>Code:</label>
+                <input type="text" name="code" id="code" required>
+                <br>
+                <label>Stock:</label>
+                <input type="number" name="stock" id="stock" required>
+                <br>
+                <label>Category:</label>
+                <input type="text" name="category" id="category" required>
+                <br>
+                <button type="submit">Cargar</button>
+            </form>
         </div>
-        {{/each}}
     </div>
+
+    <div style="display: flex;">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h2>Eliminar</h2>
+
+            <form id="realTimeFormDelete">
+                <label>ID:</label>
+                <input type="number" name="id" id="id">
+                <br>
+                <button type="submit">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h2>Productos</h2>
+
+<div style="display: flex; flex-wrap: wrap" id="list">
+    {{#if status}}
+    {{/if}}
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

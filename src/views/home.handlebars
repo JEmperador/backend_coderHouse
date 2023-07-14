@@ -7,14 +7,12 @@
     <li>
         <a href="./form">Cargar</a>
     </li>
-    <li>
-        <a href="">Eliminar</a>
-    </li>
 </ul>
 
 <div>
     <div style="display: flex; flex-wrap: wrap">
         {{#each products}}
+        {{#if status}}
         <div
             style="border-radius: 5px; background-color: white; width: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 5px">
             <div>
@@ -28,6 +26,7 @@
                 <p>Precio: {{price}} - Stock: {{stock}}</p>
             </div>
         </div>
+        {{/if}}
         {{/each}}
     </div>
 </div>
