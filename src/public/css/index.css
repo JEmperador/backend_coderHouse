@@ -1,7 +1,9 @@
-body {
-    background-color: rgb(146, 142, 142);
+::-webkit-scrollbar {
+  background-color: #d3d3d3;
+  width: 5px;
 }
 
-h1 {
-    color: rgb(207, 207, 207);
+::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background: #ffd700;
 }

@@ -47,18 +47,14 @@ socket.on("server:list", (data) => {
   let cards = "";
   data.forEach((card) => {
     cards += `
-      <div style="border-radius: 5px; background-color: white; width: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 5px">
-          <div>
-              ${card.title} - ${card.category}
-          </div>
-          <div>
-              <img src=${card.thumbnail} alt="img - ${card.thumbnail}">
-          </div>
-          <p>${card.description}</p>
-          <div>
-              <p>Precio: ${card.price} - Stock: ${card.stock}</p>
-          </div>
-      </div>`;
+    <div class="card" style="margin: 10px 100px">
+        <img src=${thumbnail} width="200px" alt="img - ${thumbnail}">
+        <div class="card-body">
+            <p class="card-title">${category} - ${title}</p>
+            <p class="card-text">${description}</p>
+            <button type="button" class="btn btn-primary">Info</button>
+        </div>
+    </div>`;
   });
 
   divList.innerHTML = cards;
