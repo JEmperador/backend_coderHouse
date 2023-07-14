@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
       : [data.thumbnail];
 
     if (!title || !description || !price || !code || !stock || !category) {
-      return res.status(400).json({ error400: "All fields are required" });
+      console.log("All fields are required");
     }
 
     const postProducts = await productManager.addProduct(
@@ -52,7 +52,9 @@ io.on("connection", (socket) => {
     );
 
     //Envia el back
-    const listProducts = await productManager.getProducts();
+    const products = await productManager.getProducts();
+    const listProducts = products.filter((product) => product.status === true);
+
     io.emit("server:list", listProducts);
   });
 
@@ -60,10 +62,14 @@ io.on("connection", (socket) => {
   socket.on("cliente:deleteProduct", async (data) => {
     const id = data;
 
-    const deleteProduct = await productManager.deleteProduct(id);
+    const logicalDeleteProduct = await productManager.logicalDeleteProduct(id);
 
     //Envia el back
-    const listProducts = await productManager.getProducts();
+    const products = await productManager.getProducts();
+
+    //Solo para mostrar los productos con status true
+    const listProducts = products.filter((product) => product.status === true);
+
     io.emit("server:list", listProducts);
   });
 

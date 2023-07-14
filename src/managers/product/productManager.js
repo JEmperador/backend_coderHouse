@@ -62,6 +62,7 @@ class ProductManager {
       const data = await fs.promises.readFile(ProductManager.#path, "utf-8");
       const products = JSON.parse(data);
       this.products = products;
+
       return products;
     } catch (err) {
       console.log("File not found");
@@ -145,40 +146,32 @@ class ProductManager {
     }
   };
 
-  /* logicalDeleteProduct = async (id) => {
+  logicalDeleteProduct = async (id) => {
     let products = await this.getProducts();
     try {
-      const product = Object.values(products).find(
+      const productIndex = Object.values(products).findIndex(
         (product) => product.id === id
       );
 
-      if (!product) {
+      if (productIndex === -1) {
         console.log("Product does not exist");
         throw new Error("Product does not exist");
       }
 
-      product.status = false;
+      products[productIndex].status = false;
 
       await fs.promises.writeFile(
         ProductManager.#path,
-        JSON.stringify(product[id]),
+        JSON.stringify(products),
         "utf-8"
       );
-
-      //products = products.filter((item) => item.id !== id);
-
-      //await fs.promises.writeFile(
-      //  ProductManager.#path,
-      //  JSON.stringify(products),
-      //  "utf-8"
-      //);
 
       console.log("Product logically removed");
       return "Product logically removed";
     } catch (err) {
       throw err;
     }
-  }; */
+  };
 }
 
 module.exports = ProductManager;
